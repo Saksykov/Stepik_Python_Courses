@@ -19,15 +19,11 @@ pytest --language=es test_items.py
 Проверьте решения минимум трех других учащихся, чтобы получить баллы за задание.
 '''
 import time
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 
 def test_button_add_to_basket(browser):
     link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
     browser.get(link)
     time.sleep(30)
-    button = WebDriverWait(browser, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR,
-                                                                              "button.btn-add-to-basket")))
-    assert button, "Button add to basket - not found"
+    buttons = browser.find_elements_by_css_selector("button.btn-add-to-basket")
+    assert len(buttons) == 1, "Button add to basket - not found"
