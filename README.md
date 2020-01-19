@@ -3,7 +3,7 @@
 
 2. Автоматизация тестирования с помощью Selenium и Python - https://stepik.org/course/575 
 
-3. Финальный проект курса (Автоматизация тестирования с помощью Selenium и Python) 4 модуль - Page Object Model 
+3. Финальный проект курса (Автоматизация тестирования с помощью Selenium и Python) - Page Object Model 
 
 4. Программирование на Python - https://stepik.org/course/67 
 
