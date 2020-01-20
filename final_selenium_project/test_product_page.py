@@ -7,3 +7,4 @@ def test_guest_can_add_product_to_basket(browser):
     page.open()
     page.should_be_button_add_to_basket()
     page.add_product_to_basket()
+    page.should_be_price()
