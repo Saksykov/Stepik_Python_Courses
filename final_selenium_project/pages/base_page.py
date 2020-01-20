@@ -1,4 +1,6 @@
 import math
+import re
+
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 
@@ -32,3 +34,14 @@ class BasePage:
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
+
+    def find_flout_value_in_element(self, how, what):
+        value_element = self.browser.find_element(how, what)
+        value_str = re.findall(r"[0-9]+", value_element.text)
+        value = float(".".join(value_str))
+        return value
+
+    def find_text_value(self, how, what):
+        text_value = self.browser.find_element(how, what)
+        text = text_value.text
+        return text
