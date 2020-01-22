@@ -6,7 +6,7 @@ from selenium.common.exceptions import NoAlertPresentException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from .locators import BasePageLocators
+from .locators import BasePageLocators, BasketPageLocators
 
 
 class BasePage:
@@ -31,6 +31,16 @@ class BasePage:
     def go_to_login_page(self):
         login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
         login_link.click()
+
+    def go_to_basket_page(self):
+        button_go_basket = self.browser.find_element(*BasePageLocators.BUTTON_VIEW_BASKET)
+        button_go_basket.click()
+
+    def should_be_basket_is_empty_text(self):
+        assert self.is_element_present(*BasketPageLocators.TEXT_IS_EMPTY), "basket is not empty TEXT"
+
+    def should_be_basket_is_empty_product(self):
+        assert self.is_not_element_present(*BasketPageLocators.BASKET_IS_EMPTY), "basket is not empty PRODUCT"
 
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
