@@ -6,7 +6,7 @@ from selenium.common.exceptions import NoAlertPresentException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from .locators import BasePageLocators, BasketPageLocators
+from .locators import BasePageLocators, BasketPageLocators, LoginPageLocators
 
 
 class BasePage:
@@ -81,3 +81,21 @@ class BasePage:
         except TimeoutException:
             return False
         return True
+
+    def register_new_user(self, email, password):
+        insert_email = self.browser.find_element(*LoginPageLocators.REGISTER_EMAIL)
+        insert_email.send_keys(email)
+        insert_pass1 = self.browser.find_element(*LoginPageLocators.REGISTER_PASSWORD_1)
+        insert_pass1.send_keys(password)
+        insert_pass2 = self.browser.find_element(*LoginPageLocators.REGISTER_PASSWORD_2)
+        insert_pass2.send_keys(password)
+        button = self.browser.find_element(*LoginPageLocators.REGISTER_BUTTON)
+        button.click()
+
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
+                                                                     " probably unauthorised user"
+
+    def go_to_recommended_reading_link(self):
+        recommended_reading_link = self.browser.find_element(*BasePageLocators.RECOMMENDED_READING)
+        recommended_reading_link.click()

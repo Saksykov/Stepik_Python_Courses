@@ -1,3 +1,4 @@
+import time
 import pytest
 
 from .pages.product_page import ProductPage
@@ -11,8 +12,8 @@ promo_parts = ["?promo=offer0", "?promo=offer1", "?promo=offer2", "?promo=offer3
 @pytest.mark.skip
 @pytest.mark.parametrize("link_parts", promo_parts)
 def test_guest_can_add_product_to_basket(browser, link_parts):
-    link = f"http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/{link_parts}"
-    page = ProductPage(browser, link)
+    link_par = f"http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/{link_parts}"
+    page = ProductPage(browser, link_par)
     page.open()
     page.should_be_product_page()
 
@@ -57,3 +58,25 @@ def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     page.go_to_basket_page()
     page.should_be_basket_is_empty_text()
     page.should_be_basket_is_empty_product()
+
+
+class TestUserAddToBasketFromProductPage:
+    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207"
+    page = None
+
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        self.page = ProductPage(browser, link)
+        self.page.open()
+        self.page.go_to_login_page()
+        email = str(time.time()) + "@fakemail.ru"
+        password = "SeleniumWaiver"
+        self.page.register_new_user(email, password)
+        self.page.should_be_authorized_user()
+        self.page.go_to_recommended_reading_link()
+
+    def test_user_cant_see_success_message(self):
+        self.page.should_not_be_success_message()
+
+    def test_user_can_add_product_to_basket(self):
+        self.page.should_be_product_page()
