@@ -3,6 +3,7 @@ from .locators import ProductPageLocators
 
 
 class ProductPage(BasePage):
+
     def should_be_product_page(self):
         self.should_be_button_add_to_basket()
         self.add_product_to_basket()
