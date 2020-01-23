@@ -10,7 +10,7 @@ from .locators import BasePageLocators, BasketPageLocators, LoginPageLocators
 
 
 class BasePage:
-    def __init__(self, browser, url, timeout=10):
+    def __init__(self, browser, url, timeout=5):
         self.browser = browser
         self.url = url
         self.browser.implicitly_wait(timeout)
@@ -42,17 +42,21 @@ class BasePage:
     def should_be_basket_is_empty_product(self):
         assert self.is_not_element_present(*BasketPageLocators.BASKET_IS_EMPTY), "basket is not empty PRODUCT"
 
-    def solve_quiz_and_get_code(self):
-        alert = self.browser.switch_to.alert
+    def solve_quiz_and_get_code(self, time=1):
+        try:
+            WebDriverWait(self.browser, time).until(EC.alert_is_present())
+            alert = self.browser.switch_to_alert()
+        except TimeoutException:
+            return "No alert in this page"
         x = alert.text.split(" ")[2]
         answer = str(math.log(abs((12 * math.sin(float(x))))))
         alert.send_keys(answer)
         alert.accept()
         try:
-            alert = self.browser.switch_to.alert
-            alert_text = alert.text
+            alert_2 = self.browser.switch_to.alert
+            alert_text = alert_2.text
             print(f"Your code: {alert_text}")
-            alert.accept()
+            alert_2.accept()
         except NoAlertPresentException:
             print("No second alert presented")
 
