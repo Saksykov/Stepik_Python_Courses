@@ -8,3 +8,5 @@
 4. Программирование на Python - https://stepik.org/course/67 
 
 5. Python: основы и применение - https://stepik.org/course/512 
+
+6. Python для решения практических задач - https://stepik.org/course/4519
