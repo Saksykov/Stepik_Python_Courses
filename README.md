@@ -10,3 +10,5 @@
 5. Python: основы и применение - https://stepik.org/course/512 
 
 6. Python для решения практических задач - https://stepik.org/course/4519
+
+7. Введение в Python. Практикум - https://stepik.org/course/56391
